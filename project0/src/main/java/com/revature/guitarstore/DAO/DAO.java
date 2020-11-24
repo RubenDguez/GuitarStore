@@ -1,0 +1,262 @@
+package com.revature.guitarstore.DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.revature.guitarstore.exceptions.GuitarStoreException;
+import com.revature.guitarstore.utils.DBConn;
+
+abstract class DAO {
+	
+	final int MIN_CODE_LENGTH = 3;
+	final int MAX_CODE_LENGTH = 10;
+	final int MIN_DESCRIPTION_LENGTH = 5;
+	final int MAX_DESCRIPTION_LENGTH = 255;
+	
+	protected final static Logger logger = LogManager.getLogger(DBConn.class);
+	
+	protected String table;
+	
+	abstract List<?> getActives();
+	abstract List<?> getInactives();
+		
+	public boolean insert(String code, String description) throws GuitarStoreException {
+
+		if (isCodeDuplicated(code) || isDescriptionDuplicated(description))
+			throw new GuitarStoreException("Infromation provided already exists in database");
+
+		if (isValidCodeField(code) && isValidDescriptionField(description))
+
+			try (Connection conn = DBConn.getConnection()) {
+
+				conn.setAutoCommit(false);
+
+				String sql = "INSERT INTO " + table + " (CODE, DESCRIPTION) VALUES (?, ?)";
+
+				PreparedStatement stmt = conn.prepareStatement(sql);
+
+				stmt.setString(1, code);
+				stmt.setString(2, description);
+
+				if (stmt.executeUpdate() == 1) {
+					conn.commit();
+					return true;
+				} else
+					throw new GuitarStoreException(
+							"Error while inserting; excuteUpdate did not return a valid response.");
+
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+			}
+
+		return false;
+	}
+
+	public Map<String, Object> searchById(int id) throws GuitarStoreException {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		if (!uniqueIdExists(id)) throw new GuitarStoreException("UNIQUEID does not exists in database");
+		
+		try (Connection conn = DBConn.getConnection()) {
+			
+			String sql = "SELECT * FROM " + table + " WHERE UNIQUEID = ? AND ACTIVE = TRUE";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				map.put("UNIQUEID", rs.getInt("UNIQUEID"));
+				map.put("CODE", rs.getString("CODE"));
+				map.put("DESCRIPTION", rs.getString("DESCRIPTION"));
+			}
+			
+			return map;
+						
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public boolean updateCode(int uniqueId, String value) throws GuitarStoreException {
+
+		if (!uniqueIdExists(uniqueId)) throw new GuitarStoreException("UNIQUEID does not exists in database");
+		
+		if (value == "" || value == null)
+			throw new GuitarStoreException("Code must not be empty or null");
+
+		if (isDescriptionDuplicated(value))
+			throw new GuitarStoreException("Code provided already exists in database");
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			conn.setAutoCommit(false);
+			String sql = "UPDATE " + table + " SET CODE = ? WHERE UNIQUEID = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, value);
+			stmt.setInt(2, uniqueId);
+
+			if (stmt.executeLargeUpdate() == 1) {
+				conn.commit();
+				return true;
+			} else
+				throw new GuitarStoreException("Error while updating; excuteUpdate did not return a valid response.");
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return false;
+	}
+
+	public boolean updateDescription(int uniqueId, String value) throws GuitarStoreException {
+
+		if (!uniqueIdExists(uniqueId)) throw new GuitarStoreException("UNIQUEID does not exists in database");
+		
+		if (value == "" || value == null)
+			throw new GuitarStoreException("Description must not be empty or null");
+
+		if (isDescriptionDuplicated(value))
+			throw new GuitarStoreException("Description provided already exists in database");
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			conn.setAutoCommit(false);
+			String sql = "UPDATE " + table + " SET DESCRIPTION = ? WHERE UNIQUEID = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, value);
+			stmt.setInt(2, uniqueId);
+
+			if (stmt.executeLargeUpdate() == 1) {
+				conn.commit();
+				return true;
+			} else
+				throw new GuitarStoreException("Error while updating; excuteUpdate did not return a valid response.");
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return false;
+	}
+	
+	public boolean delete(int value) throws GuitarStoreException {
+		
+		if (!uniqueIdExists(value)) throw new GuitarStoreException("UNIQUEID does not exists in database");
+		
+		try (Connection conn = DBConn.getConnection()) {
+
+			conn.setAutoCommit(false);
+			String sql = "UPDATE " + table + " SET ACTIVE = FALSE WHERE UNIQUEID = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, value);
+
+			if (stmt.executeUpdate() == 1) {
+				conn.commit();
+				return true;
+			} else
+				throw new GuitarStoreException("Error while deleting; executeUpdate did not return a valid response");
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return false;
+	}
+
+	public boolean uniqueIdExists(int id) {
+		try (Connection conn = DBConn.getConnection()) {
+			String sql = "SELECT * FROM " + table + " WHERE UNIQUEID = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		return false;
+	}
+	
+	protected boolean isCodeDuplicated(String code) {
+		try (Connection conn = DBConn.getConnection()) {
+			String sql = "SELECT * FROM " + table + " WHERE CODE = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, code);
+
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		return false;
+	}
+
+	protected boolean isDescriptionDuplicated(String description) {
+		try (Connection conn = DBConn.getConnection()) {
+			String sql = "SELECT * FROM " + table + " WHERE DESCRIPTION = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, description);
+
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		return false;
+	}
+
+	protected boolean isValidCodeField(String value) throws GuitarStoreException {
+		// Code rules
+		if (value == "" || value == null)
+			throw new GuitarStoreException("Code must not be empty.");
+		if (value.length() < MIN_CODE_LENGTH)
+			throw new GuitarStoreException("Code must not be less than " + MIN_CODE_LENGTH + " characters");
+		if (value.length() > MAX_CODE_LENGTH)
+			throw new GuitarStoreException("Code must not be greater than " + MAX_CODE_LENGTH + " characters");
+		
+		return true;
+		
+	}
+
+	protected boolean isValidDescriptionField(String value) throws GuitarStoreException {
+		// Description rules
+		if (value == "" || value == null)
+			throw new GuitarStoreException("Description must not be empty.");
+		if (value.length() < MIN_DESCRIPTION_LENGTH)
+			throw new GuitarStoreException(
+					"Description must not be less than " + MIN_DESCRIPTION_LENGTH + " characters");
+		if (value.length() > MAX_DESCRIPTION_LENGTH)
+			throw new GuitarStoreException("Description must not be greater than " + MAX_CODE_LENGTH + " characters");
+
+		return true;
+		
+	}
+	
+}
