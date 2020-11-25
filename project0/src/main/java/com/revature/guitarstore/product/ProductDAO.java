@@ -19,7 +19,7 @@ public class ProductDAO {
 
 	protected final static Logger logger = LogManager.getLogger(DBConn.class);
 
-	public boolean insert(Product product) throws GuitarStoreException {
+	public ProductTemplate insert(Product product) throws GuitarStoreException {
 
 		if (isTitleDuplicated(product.getTitle()))
 			throw new GuitarStoreException("The title provided for this product already exists in Database");
@@ -49,7 +49,24 @@ public class ProductDAO {
 
 				if (stmt.executeUpdate() == 1) {
 					conn.commit();
-					return true;
+
+					sql = "SELECT UNIQUEID FROM PRODUCT WHERE POSID = ? AND TITLE = ?";
+					stmt = conn.prepareStatement(sql);
+
+					stmt.setInt(1, product.getPosID());
+					stmt.setString(2, product.getTitle());
+
+					ResultSet rs = stmt.executeQuery();
+
+					if (rs.next()) {
+
+						ProductTemplate pt = new ProductTemplate(rs.getInt("UNIQUEID"));
+						return pt;
+
+					}
+
+					return null;
+
 				} else
 					throw new GuitarStoreException(
 							"Error while inserting; excuteUpdate did not return a valid response.");
@@ -58,35 +75,34 @@ public class ProductDAO {
 				logger.error(e.getMessage());
 			}
 		}
-		return true;
+
+		return null;
 	}
 
 	public List<ProductTemplate> getAllActiveProducts() throws GuitarStoreException {
-		List<ProductTemplate> list = new ArrayList<ProductTemplate>(); 
-			
-			try (Connection conn = DBConn.getConnection()) {
-				
-				String sql = "SELECT UNIQUEID FROM PRODUCT WHERE ACTIVE = TRUE";
-				
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
-				
-				while (rs.next()) {
-					
-					list.add(new ProductTemplate(
-								rs.getInt("UNIQUEID")
-							));
-				}
-				
-				return list;
-				
-			} catch (SQLException e) {
-				logger.error(e.getMessage());
+		List<ProductTemplate> list = new ArrayList<ProductTemplate>();
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			String sql = "SELECT UNIQUEID FROM PRODUCT WHERE ACTIVE = TRUE";
+
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				list.add(new ProductTemplate(rs.getInt("UNIQUEID")));
 			}
-			
+
+			return list;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
 		return new ArrayList<ProductTemplate>();
 	}
-	
+
 	public boolean uniqueIdExists(int id) {
 		try (Connection conn = DBConn.getConnection()) {
 			String sql = "SELECT * FROM PRODUCT WHERE UNIQUEID = ?";
@@ -103,7 +119,7 @@ public class ProductDAO {
 		}
 		return false;
 	}
-	
+
 	private boolean isTitleDuplicated(String title) {
 		try (Connection conn = DBConn.getConnection()) {
 			String sql = "SELECT TITLE FROM PRODUCT WHERE TITLE = ?";
@@ -137,4 +153,59 @@ public class ProductDAO {
 		}
 		return false;
 	}
+
+	public List<ProductTemplate> getAllActiveProductsByBrand(int brandId) throws GuitarStoreException {
+
+		List<ProductTemplate> list = new ArrayList<ProductTemplate>();
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			String sql = "SELECT UNIQUEID FROM PRODUCT WHERE ACTIVE = TRUE AND BRAND_UID = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, brandId);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				list.add(new ProductTemplate(rs.getInt("UNIQUEID")));
+			}
+
+			return list;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return new ArrayList<ProductTemplate>();
+	}
+
+	public List<ProductTemplate> getAllActiveProductsByDepartment(int brandId) throws GuitarStoreException {
+
+		List<ProductTemplate> list = new ArrayList<ProductTemplate>();
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			String sql = "SELECT UNIQUEID FROM PRODUCT WHERE ACTIVE = TRUE AND DEPARTMENT_UID = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, brandId);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				list.add(new ProductTemplate(rs.getInt("UNIQUEID")));
+			}
+
+			return list;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return new ArrayList<ProductTemplate>();
+	}
+
 }

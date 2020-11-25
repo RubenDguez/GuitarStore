@@ -127,9 +127,42 @@ public class UserDAO {
 	}
 	
 	public static User getUserById(int id) throws UserException {
+		
 		try (Connection conn = DBConn.getConnection()) {
 			
 			String sql = "SELECT * FROM USERS WHERE UNIQUEID = ? AND ACTIVE = TRUE";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+
+				return new User(
+							rs.getInt("UNIQUEID"),
+							rs.getString("USERNAME"),
+							rs.getString("EMAIL"),
+							rs.getString("PASSWORD"),
+							rs.getInt("USERTYPE_UID")
+						);
+			}
+			
+			else 
+				throw new UserException("User not found");
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public static User getInactiveUserById(int id) throws UserException {
+		
+		try (Connection conn = DBConn.getConnection()) {
+			
+			String sql = "SELECT * FROM USERS WHERE UNIQUEID = ? AND ACTIVE = FALSE";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -200,12 +233,13 @@ public class UserDAO {
 	}
 
 	public static boolean deleteUser(int userId) throws UserException {
-		
+
 		if (getUserById(userId) == null) throw new UserException("User not found");
 		
 		try (Connection conn = DBConn.getConnection()) {
 			
 			conn.setAutoCommit(false);
+			
 			String sql = "UPDATE USERS SET ACTIVE = FALSE WHERE UNIQUEID = ?";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -222,6 +256,33 @@ public class UserDAO {
 			logger.error(e.getMessage());
 		} 
 
+		return false;
+	}
+	
+	public static boolean reactivateUser(int userId) throws UserException {
+		
+		if (getInactiveUserById(userId) == null) throw new UserException("User UNIQUEID not found in database");
+		
+		try (Connection conn = DBConn.getConnection()) {
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE USERS SET ACTIVE = TRUE WHERE UNIQUEID = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, userId);
+			
+			if (stmt.executeUpdate() == 1) {
+				conn.commit();
+				return true;
+			}
+			else
+				throw new UserException("Error while updating user; excuteUpdate did not return a valid response.");
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		
 		return false;
 	}
 	

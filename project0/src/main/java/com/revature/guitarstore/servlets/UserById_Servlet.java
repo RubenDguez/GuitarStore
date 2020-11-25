@@ -13,11 +13,11 @@ import com.revature.guitarstore.users.User;
 import com.revature.guitarstore.users.UserDAO;
 import com.revature.guitarstore.users.UserException;
 
-public class UserByIdServlet extends HttpServlet {
+public class UserById_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Gson gson = new Gson();
 
-	public UserByIdServlet() {
+	public UserById_Servlet() {
 		super();
 	}
 

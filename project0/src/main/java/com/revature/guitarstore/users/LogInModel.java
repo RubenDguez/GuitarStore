@@ -36,8 +36,8 @@ public class LogInModel {
 
 	public User toUser() throws UserException {
 
-		if ((this.username != null || this.username != "") && (this.password != null || this.password != "")) {
-
+		if (this.username != "" && this.password != "") {
+			
 			try (Connection conn = DBConn.getConnection()) {
 
 				String sql = "SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?";
