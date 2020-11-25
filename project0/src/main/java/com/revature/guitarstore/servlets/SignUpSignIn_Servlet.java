@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.guitarstore.users.LogInModel;
 import com.revature.guitarstore.users.SignUserModel;
@@ -19,7 +22,7 @@ import com.revature.guitarstore.users.UserLogin;
 public class SignUpSignIn_Servlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger logger = LogManager.getLogger(SignUpSignIn_Servlet.class);
 	Gson gson = new Gson();
 
 	public SignUpSignIn_Servlet() {
@@ -47,6 +50,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().append(gson.toJson("400 Bad Request"));
 			response.setStatus(400);
+			logger.warn("400 Bad Request");
 		}
 
 	}
@@ -83,12 +87,15 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 					res.setContentType("application/json");
 					res.getWriter().append(gson.toJson(newUser));
 					res.setStatus(201);
+					
+					logger.debug("Action: Sign Up" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 				} catch (UserException e) {
 
 					res.setContentType("application/json");
 					res.getWriter().append(gson.toJson(e.getMessage()));
 					res.setStatus(404);
+					logger.error("404 Not Found" + e.toString());
 
 				}
 
@@ -97,6 +104,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 				res.setContentType("application/json");
 				res.getWriter().append(gson.toJson("400 Bad Request"));
 				res.setStatus(400);
+				logger.warn("400 Bad Request");
 
 			}
 
@@ -106,6 +114,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 			res.getWriter().append(
 					gson.toJson("405 Method Not Allowed: User already signed in as " + s.getAttribute("username")));
 			res.setStatus(405);
+			logger.warn("405 Method Not Allowed: User already signed in as " + s.getAttribute("username"));
 
 		}
 
@@ -131,12 +140,14 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 				res.setContentType("application/json");
 				res.getWriter().append(gson.toJson("User opted out:" + b));
 				res.setStatus(200);
+				logger.debug("Action: opt-out" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 			} catch (UserException e) {
 
 				res.setContentType("application/json");
 				res.getWriter().append(gson.toJson(e.getMessage()));
 				res.setStatus(404);
+				logger.error("404 Not Found" + e.toString());
 
 			}
 
@@ -145,6 +156,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 			res.setContentType("application/json");
 			res.getWriter().append(gson.toJson("401 Unauthorized"));
 			res.setStatus(401);
+			logger.warn("401 Unauthorized");
 
 		}
 
@@ -183,12 +195,14 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 							res.setContentType("application/json");
 							res.getWriter().append(gson.toJson("user reactivated: " + b));
 							res.setStatus(200);
-
+							logger.debug("Action: Recover" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
+							
 						} else {
 
 							res.setContentType("application/json");
 							res.getWriter().append(gson.toJson("404 user coul not be reactivated"));
 							res.setStatus(404);
+							logger.warn("404 Not Found");
 
 						}
 
@@ -197,6 +211,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 						res.setContentType("application/json");
 						res.getWriter().append(gson.toJson("404: " + e.toString()));
 						res.setStatus(404);
+						logger.error("404 Not Found" + e.toString());
 
 					}
 					
@@ -205,6 +220,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 					res.setContentType("application/json");
 					res.getWriter().append(gson.toJson("404 Not Found"));
 					res.setStatus(404);
+					logger.warn("404 Not Found");
 					
 				}
 
@@ -213,6 +229,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 				res.setContentType("application/json");
 				res.getWriter().append(gson.toJson("400 Bad Request"));
 				res.setStatus(400);
+				logger.warn("400 Bad Request");
 
 			}
 
@@ -222,6 +239,7 @@ public class SignUpSignIn_Servlet extends HttpServlet {
 			res.getWriter().append(
 					gson.toJson("405 Method Not Allowed: User already signed in as " + s.getAttribute("username")));
 			res.setStatus(405);
+			logger.warn("405 Method Not Allowed: User already signed in as " + s.getAttribute("username"));
 
 		}
 

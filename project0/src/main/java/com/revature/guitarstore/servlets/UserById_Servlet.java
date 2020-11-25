@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.guitarstore.users.User;
 import com.revature.guitarstore.users.UserDAO;
@@ -15,6 +18,7 @@ import com.revature.guitarstore.users.UserException;
 
 public class UserById_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LogManager.getLogger(UserById_Servlet.class);
 	Gson gson = new Gson();
 
 	public UserById_Servlet() {
@@ -39,11 +43,13 @@ public class UserById_Servlet extends HttpServlet {
 					response.setContentType("application/json");
 					response.getWriter().append(gson.toJson(user));
 					response.setStatus(201);
+					logger.debug("Action: Get User By Id" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 				} catch (UserException e) {
 					response.setContentType("application/json");
 					response.getWriter().append(gson.toJson(e.getMessage()));
 					response.setStatus(404);
+					logger.error("404 Not Found" + e.toString());
 				}
 
 			} else {
@@ -51,12 +57,14 @@ public class UserById_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().append(gson.toJson("401 Unauthorized"));
 				response.setStatus(401);
+				logger.warn("401 Unauthorized");
 
 			}
 		} else {
 			response.setContentType("application/json");
-			response.getWriter().append(gson.toJson("404 Unauthorized"));
-			response.setStatus(404);
+			response.getWriter().append(gson.toJson("401 Unauthorized"));
+			response.setStatus(401);
+			logger.warn("401 Unauthorized");
 		}
 	}
 
@@ -92,11 +100,13 @@ public class UserById_Servlet extends HttpServlet {
 					response.setContentType("application/json");
 					response.getWriter().append(gson.toJson(user));
 					response.setStatus(201);
+					logger.debug("Action: Update User" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 				} catch (UserException e) {
 					response.setContentType("application/json");
 					response.getWriter().append(gson.toJson(e.getMessage()));
 					response.setStatus(404);
+					logger.error("404 Not Found" + e.toString());
 				}
 
 			} else {
@@ -104,12 +114,14 @@ public class UserById_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().append(gson.toJson("401 Unauthorized"));
 				response.setStatus(401);
+				logger.warn("401 Unauthorized");
 
 			}
 		} else {
 			response.setContentType("application/json");
 			response.getWriter().append(gson.toJson("404 Not Found"));
 			response.setStatus(404);
+			logger.warn("404 Not Found");
 		}
 	}
 
@@ -132,11 +144,13 @@ public class UserById_Servlet extends HttpServlet {
 					response.setContentType("application/json");
 					response.getWriter().append(gson.toJson(b));
 					response.setStatus(201);
+					logger.debug("Action: Delete User" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 				} catch (UserException e) {
 					response.setContentType("application/json");
 					response.getWriter().append(gson.toJson(e.getMessage()));
 					response.setStatus(404);
+					logger.error("404 Not Found" + e.toString());
 				}
 
 			} else {
@@ -144,12 +158,14 @@ public class UserById_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().append(gson.toJson("401 Unauthorized"));
 				response.setStatus(401);
+				logger.warn("401 Unauthorized");
 
 			}
 		} else {
 			response.setContentType("application/json");
 			response.getWriter().append("404 Not Found");
 			response.setStatus(404);
+			logger.warn("404 Not Found");
 		}
 	}
 

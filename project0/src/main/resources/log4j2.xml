@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="info" monitorInterval="30">
+	
+	<Properties>
+		<Property name="APP_LOG_ROOT">C:/Users/ruben/Desktop</Property>
+	</Properties>
 
-<Configuration status="info">
-
-  <Properties>
-    <Property name="logdir">/home/janbodnar/tmp</Property>
-    <Property name="layout">%d [%t] %-5p %c- %m%n</Property>
-  </Properties>
-  
-  <Appenders>
-
-    <RollingFile name="LOCALHOST"
-        fileName="${logdir}/localhost.log"
-        filePattern="${logdir}/localhost.%d{yyyy-MM-dd}-%i.log">
-      <PatternLayout pattern="${layout}"/>
-      <Policies>
-        <TimeBasedTriggeringPolicy />
-        <SizeBasedTriggeringPolicy size="1 MB" />
-      </Policies>
-      <DefaultRolloverStrategy max="10" />
-    </RollingFile>
-
-  </Appenders>
-  
-  <Loggers>
-
-    <Logger name="com.zetcode"
-        level="info" additivity="false">
-      <AppenderRef ref="LOCALHOST" />
-    </Logger>
-    
-    <Root level="error">
-    </Root>    
-
-  </Loggers>
+    <Appenders>
+        <File name="LogToFile" fileName="${APP_LOG_ROOT}/application-${date:yyyyMMdd}.log">
+            <PatternLayout>
+                <Pattern>%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <!-- avoid duplicated logs with additivity=false -->
+        <Logger name="com.mkyong" level="trace" additivity="false">
+            <AppenderRef ref="LogToFile"/>
+        </Logger>
+        <Root level="trace">
+            <AppenderRef ref="LogToFile"/>
+        </Root>
+    </Loggers>
 </Configuration>

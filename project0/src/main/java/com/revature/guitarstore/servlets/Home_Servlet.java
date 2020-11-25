@@ -6,12 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Home
- */
 public class Home_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     public Home_Servlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -24,11 +20,7 @@ public class Home_Servlet extends HttpServlet {
 		request.setAttribute("message", message);
 		request.getRequestDispatcher("/WEB-INF/Homepage.jsp").forward(request, response);
 		response.setStatus(200);
-	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

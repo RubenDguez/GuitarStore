@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.guitarstore.exceptions.GuitarStoreException;
 import com.revature.guitarstore.model.Product;
@@ -15,7 +18,9 @@ import com.revature.guitarstore.product.ProductDAO;
 
 public class Product_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	private static final Logger logger = LogManager.getLogger(Product_Servlet.class);
+	
 	Gson gson = new Gson();
 
 	public Product_Servlet() {
@@ -34,8 +39,9 @@ public class Product_Servlet extends HttpServlet {
 		} catch (GuitarStoreException e) {
 
 			response.setContentType("application/json");
-			response.getWriter().append(gson.toJson("404 Bad Request"));
+			response.getWriter().append(gson.toJson("404 Not Found"));
 			response.setStatus(404);
+			logger.error("404 Not Found" + e.toString());
 
 		}
 	}
@@ -67,12 +73,14 @@ public class Product_Servlet extends HttpServlet {
 					response.setContentType("application/json");
 					response.setStatus(200);
 					response.getWriter().append(gson.toJson(pdao.insert(p)));
+					logger.debug("Action: Insert User" + " user: " + session.getAttribute("username") + "Session id: " + session.getId());
 
 				} catch (GuitarStoreException e) {
 
 					response.setContentType("application/json");
 					response.setStatus(400);
 					response.getWriter().append("400 Bad Request: " + e.toString());
+					logger.error("400 Bad Request" + e.toString());
 
 				}
 				
@@ -80,12 +88,14 @@ public class Product_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.setStatus(401);
 				response.getWriter().append("401 Unauthorized");
+				logger.error("401 Unauthorized");
 			}
 			
 		} else {
 			response.setContentType("application/json");
 			response.setStatus(401);
 			response.getWriter().append("401 Unauthorized");
+			logger.error("401 Unauthorized");
 		}
 	}
 

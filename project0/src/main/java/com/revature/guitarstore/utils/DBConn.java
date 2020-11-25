@@ -30,13 +30,10 @@ public class DBConn {
 
 			DriverManager.registerDriver(new Driver());
 			conn = DriverManager.getConnection(url, user, password);
-		
-			logger.debug("Connection successful");
-			
 			return conn;
 
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error("Connection failed: " + e.getMessage());
 	
 		} 
 		return null;

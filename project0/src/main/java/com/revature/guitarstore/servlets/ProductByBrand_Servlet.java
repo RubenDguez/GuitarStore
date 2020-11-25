@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.guitarstore.exceptions.GuitarStoreException;
 import com.revature.guitarstore.product.ProductDAO;
@@ -13,6 +16,7 @@ import com.revature.guitarstore.product.ProductDAO;
 
 public class ProductByBrand_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LogManager.getLogger(ProductByBrand_Servlet.class);
 	Gson gson = new Gson();
 
     public ProductByBrand_Servlet() {
@@ -37,6 +41,7 @@ public class ProductByBrand_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.setStatus(404);
 				response.getWriter().append("404 Not Found");
+				logger.error("404 Not Found" + e.toString());
 			}
 			 
 			

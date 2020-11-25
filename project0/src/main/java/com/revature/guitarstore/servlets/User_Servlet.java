@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.guitarstore.users.User;
 import com.revature.guitarstore.users.UserDAO;
@@ -15,7 +18,7 @@ import com.revature.guitarstore.users.UserException;
 
 public class User_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger logger = LogManager.getLogger(User_Servlet.class);
 	Gson gson = new Gson();
 
 	public User_Servlet() {
@@ -34,12 +37,14 @@ public class User_Servlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().append(json);
 			response.setStatus(200);
+			logger.debug("Action: Get All Users" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 		} else {
 
 			response.setContentType("application/json");
 			response.getWriter().append(gson.toJson("401 Unauthorized"));
 			response.setStatus(401);
+			logger.warn("401 Unauthorized");
 
 		}
 	}
@@ -69,11 +74,13 @@ public class User_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().append(gson.toJson(user));
 				response.setStatus(201);
+				logger.debug("Action: Insert User" + " user: " + s.getAttribute("username") + "Session id: " + s.getId());
 
 			} catch (UserException e) {
 				response.setContentType("application/json");
 				response.getWriter().append(gson.toJson(e.getMessage()));
 				response.setStatus(404);
+				logger.error("401 Unauthorized");
 			}
 
 		} else {
@@ -81,6 +88,7 @@ public class User_Servlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().append(gson.toJson("401 Unauthorized"));
 			response.setStatus(401);
+			logger.warn("401 Unauthorized");
 
 		}
 	}

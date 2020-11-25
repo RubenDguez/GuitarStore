@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.revature.guitarstore.users.LogInModel;
@@ -17,7 +20,7 @@ import com.revature.guitarstore.users.UserLogin;
 
 public class UserLogin_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger logger = LogManager.getLogger(UserLogin_Servlet.class);
 	Gson gson = new Gson();
 
 	public UserLogin_Servlet() {
@@ -56,14 +59,15 @@ public class UserLogin_Servlet extends HttpServlet {
 
 					response.setContentType("application/json");
 					response.getWriter().append("session: " + session.getId() + "\n" + gson.toJson(user));
-
 					response.setStatus(200);
-					
+					logger.debug(" user: " + session.getAttribute("username") + " Session id: " + session.getId());
+				
 				} else {
 
 					response.setContentType("application/json");
 					response.getWriter().append("404 Not Found");
 					response.setStatus(404);
+					logger.warn("404 Not Found");
 
 				}
 
@@ -72,6 +76,7 @@ public class UserLogin_Servlet extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().append("404 Not Found");
 				response.setStatus(404);
+				logger.error("404 Not Found" + e.toString());
 
 			}
 
@@ -80,7 +85,7 @@ public class UserLogin_Servlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().append("405 Method Not Allowed");
 			response.setStatus(405);
-
+			logger.warn("405 Method Not Allowed");
 		}
 	}
 }
