@@ -77,7 +77,24 @@ Guitar Store is an API created to manage the product side of your guitar store. 
         -  **Note**: You can find a full video on how to install **PostgreSQL** following this link:
         [How to Install and Setup PostgreSQL on Windows](https://www.youtube.com/watch?v=RAFZleZYxsc)
 
+    10. After installing PostgreSQL in your machine, you need to create the following environment variables:
+
+        -   DB_URL : jdbc:postgresql://localhost/Store
+        -   DB_USER : postgres
+        -   DB_PASSWORD : *the password you crated during **PostgreSQL** installation proccess*.
 
 - Download and Install **DBeaver**
 
-    1. 
+- After installing DBeaver and configuing the access to your **PostgreSQL Server** open the ***InitialDB.sql*** file provided. It containes the neccessary script to create the necessary tables in the database and MOCK data to start using the API.
+
+- Install Spring Tool Suite IDE
+
+    1. Download Spring Tool Suite from: https://spring.io/tools3/sts/all. Click on the Windows 64-BIT button to start download.
+
+    2. After downloading the self extracting file, double-click on the ***STS.exe*** file.
+
+    3. Select the folder where you downloaded ***GuitarStore*** from GitHub as your "directory workspace" and click **LAUNCH**.
+
+    4. Create a Tomcat virtual server on the newly installed STS.
+
+    5. Right click on the project select Run As and then Run on Server.
