@@ -10,7 +10,7 @@ import com.revature.guitarstore.exceptions.GuitarStoreException;
 import com.revature.guitarstore.model.Product;
 
 public class ValidateProduct {
-
+	
 	public static boolean isValid(Product product) throws GuitarStoreException {
 		
 		// product POS ID rules
