@@ -14,6 +14,26 @@ import org.apache.logging.log4j.Logger;
 import com.revature.guitarstore.exceptions.GuitarStoreException;
 import com.revature.guitarstore.utils.DBConn;
 
+/**
+ * This class implements CRUD operation for tables that consists of 
+ * UNIQUEID, CODE and DESCRIPTION.
+ * 
+ * In order to properly use this class, developer must provide the name
+ * of the table it will actually work on, and must be the same table name in the database.
+ * 
+ * To provide name of the TABLE please set the table name in the constructor of your class
+ * <br>
+ * e.g.
+ * <br>
+ * <code>
+ * 	public BrandDAO {
+ * 		this.table = "BRAND" // BRAND must be a table in the database.
+ * 	}
+ * </code>
+ * 
+ * @author Ruben Dominguez
+ *
+ */
 abstract class DAO {
 	
 	final int MIN_CODE_LENGTH = 3;
@@ -23,16 +43,31 @@ abstract class DAO {
 	
 	protected final static Logger logger = LogManager.getLogger(DBConn.class);
 	
+
+	// This variable must be set at the moment of creating a child's instance.
+	// It must correspond to the correct table name in database.
 	protected String table;
 	
+	// Abstract methods that must be implemented in child class
 	abstract List<?> getActives();
 	abstract List<?> getInactives();
-		
+
+	/**
+	 * Inserts a record in it respective table in database
+	 * The table in database is defined when the child of this class is created
+	 * 
+	 * @param code
+	 * @param description
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean insert(String code, String description) throws GuitarStoreException {
 
+		// verifies code and description duplication and throws 'GuitarException' if finds a duplicate within its table
 		if (isCodeDuplicated(code) || isDescriptionDuplicated(description))
 			throw new GuitarStoreException("Infromation provided already exists in database");
 
+		// verifies that the code and description meet the minimum requirement
 		if (isValidCodeField(code) && isValidDescriptionField(description))
 
 			try (Connection conn = DBConn.getConnection()) {
@@ -60,6 +95,15 @@ abstract class DAO {
 		return false;
 	}
 
+	
+	/**
+	 * This method will return a Map with the information associated with an Id.
+	 * 
+	 * @param id
+	 * @return Map
+	 * @throws GuitarStoreException
+	 * 
+	 */
 	public Map<String, Object> searchById(int id) throws GuitarStoreException {
 		
 		Map<String, Object> map = new HashMap<>();
@@ -90,6 +134,15 @@ abstract class DAO {
 		return null;
 	}
 	
+	/**
+	 * This method updates the 'code' column of an specific Id.
+	 * 
+	 * 
+	 * @param uniqueId
+	 * @param value
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean updateCode(int uniqueId, String value) throws GuitarStoreException {
 
 		if (!uniqueIdExists(uniqueId)) throw new GuitarStoreException("UNIQUEID does not exists in database");
@@ -122,7 +175,16 @@ abstract class DAO {
 
 		return false;
 	}
-
+	
+	/**
+	 * This method updates the 'description' column of an specific Id.
+	 * 
+	 * 
+	 * @param uniqueId
+	 * @param value
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean updateDescription(int uniqueId, String value) throws GuitarStoreException {
 
 		if (!uniqueIdExists(uniqueId)) throw new GuitarStoreException("UNIQUEID does not exists in database");
@@ -156,6 +218,13 @@ abstract class DAO {
 		return false;
 	}
 	
+	/**
+	 * This method deletes an specified record using its ID.  
+	 * 
+	 * @param value
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean delete(int value) throws GuitarStoreException {
 		
 		if (!uniqueIdExists(value)) throw new GuitarStoreException("UNIQUEID does not exists in database");
@@ -181,6 +250,13 @@ abstract class DAO {
 		return false;
 	}
 
+	
+	/**
+	 * This method is used to verify if an ID exists in an specified TABLE
+	 * 
+	 * @param id
+	 * @return Boolean
+	 */
 	public boolean uniqueIdExists(int id) {
 		try (Connection conn = DBConn.getConnection()) {
 			String sql = "SELECT * FROM " + table + " WHERE UNIQUEID = ?";
@@ -198,6 +274,12 @@ abstract class DAO {
 		return false;
 	}
 	
+	/**
+	 * This method is used to verify if the 'code' provided is unique in an specified TABLE
+	 * 
+	 * @param code
+	 * @return
+	 */
 	protected boolean isCodeDuplicated(String code) {
 		try (Connection conn = DBConn.getConnection()) {
 			String sql = "SELECT * FROM " + table + " WHERE CODE = ?";
@@ -215,6 +297,12 @@ abstract class DAO {
 		return false;
 	}
 
+	/**
+	 * This method is used to verify if the 'description' provided is unique in an specified TABLE
+	 * 
+	 * @param description
+	 * @return Boolean
+	 */
 	protected boolean isDescriptionDuplicated(String description) {
 		try (Connection conn = DBConn.getConnection()) {
 			String sql = "SELECT * FROM " + table + " WHERE DESCRIPTION = ?";
@@ -232,6 +320,14 @@ abstract class DAO {
 		return false;
 	}
 
+	/**
+	 * This method is used to verify if the 'code' provided is valid, which means that
+	 * complies with predetermined values:
+	 * MIN_CODE_LENGTH and MAX_CODE_LENGTH constants
+	 * 
+	 * @param description
+	 * @return Boolean
+	 */
 	protected boolean isValidCodeField(String value) throws GuitarStoreException {
 		// Code rules
 		if (value == "" || value == null)
@@ -245,6 +341,14 @@ abstract class DAO {
 		
 	}
 
+	/**
+	 * This method is used to verify if the 'description' provided is valid, which means that
+	 * complies with predetermined values:
+	 * MIN_DESCRIPTION_LENGTH and MAX_DESCRIPTION_LENGTH constants
+	 * 
+	 * @param description
+	 * @return Boolean
+	 */
 	protected boolean isValidDescriptionField(String value) throws GuitarStoreException {
 		// Description rules
 		if (value == "" || value == null)

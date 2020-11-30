@@ -15,10 +15,27 @@ import com.revature.guitarstore.model.Fture;
 import com.revature.guitarstore.product.ProductDAO;
 import com.revature.guitarstore.utils.DBConn;
 
+/**
+ * Since Features and Product tables are a many to many relationship, 
+ * this class is used to connect and retrieve the features on an specified
+ * Product.
+ * 
+ * @author Ruben Dominguez
+ *
+ */
 public class ProductFeatureDAO {
 
 	protected final static Logger logger = LogManager.getLogger(DBConn.class);
 
+	/**
+	 * Creates the connection between the provided product and the provided feature,
+	 * in an many to many relationship tables.
+	 * 
+	 * @param productId
+	 * @param featureId
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean connecFeature(int productId, int featureId) throws GuitarStoreException {
 
 		if (!new ProductDAO().uniqueIdExists(productId))
@@ -50,6 +67,13 @@ public class ProductFeatureDAO {
 		return false;
 	}
 
+	/**
+	 * Retrieves and return all features related to an specified product.
+	 * 
+	 * @param productId
+	 * @return List<Fture>
+	 * @throws GuitarStoreException
+	 */
 	public List<Fture> getFeatures(int productId) throws GuitarStoreException {
 		if (!new ProductDAO().uniqueIdExists(productId))
 			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");

@@ -15,10 +15,27 @@ import com.revature.guitarstore.model.Specification;
 import com.revature.guitarstore.product.ProductDAO;
 import com.revature.guitarstore.utils.DBConn;
 
+/**
+ * Since Specifications and Product tables are a many to many relationship, 
+ * this class is used to connect and retrieve the specifications on an specified
+ * Product.
+ * 
+ * @author Ruben Dominguez
+ *
+ */
 public class ProductSpecificationsDAO {
 
 	protected final static Logger logger = LogManager.getLogger(DBConn.class);
 
+	/**
+	 * Creates the connection between the provided product and the provided specification,
+	 * in an many to many relationship tables.
+	 * 
+	 * @param productId
+	 * @param specificationId
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean connectSpecification(int productId, int specificationId) throws GuitarStoreException {
 
 		if (!new ProductDAO().uniqueIdExists(productId))
@@ -50,6 +67,13 @@ public class ProductSpecificationsDAO {
 		return false;
 	}
 
+	/**
+	 * Retrieves and return all specifications related to an specified product.
+	 * 
+	 * @param productId
+	 * @return List<Specification>
+	 * @throws GuitarStoreException
+	 */
 	public List<Specification> getSpecifications(int productId) throws GuitarStoreException {
 		if (!new ProductDAO().uniqueIdExists(productId))
 			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");

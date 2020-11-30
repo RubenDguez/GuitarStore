@@ -16,6 +16,7 @@ public class BrandDAO extends DAO {
 	}
 
 
+
 	@Override
 	public List<Brand> getActives() {
 		List<Brand> list = new ArrayList<Brand>();
@@ -40,6 +41,7 @@ public class BrandDAO extends DAO {
 		return new ArrayList<Brand>();
 	}
 	
+
 	@Override
 	public List<Brand> getInactives() {
 		List<Brand> list = new ArrayList<Brand>();

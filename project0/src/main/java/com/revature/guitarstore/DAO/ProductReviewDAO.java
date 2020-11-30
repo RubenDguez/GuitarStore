@@ -15,10 +15,28 @@ import com.revature.guitarstore.model.Review;
 import com.revature.guitarstore.product.ProductDAO;
 import com.revature.guitarstore.utils.DBConn;
 
+/**
+ * Since Reviews and Product tables are a many to many relationship, 
+ * this class is used to connect and retrieve the Reviews on an specified
+ * Product.
+ * 
+ * @author Ruben Dominguez
+ * 
+ */
 public class ProductReviewDAO {
 
 	protected final static Logger logger = LogManager.getLogger(DBConn.class);
 
+	
+	/**
+	 * Creates the connection between the provided Product and the provided Review,
+	 * in an many to many relationship tables.
+	 * 
+	 * @param productId
+	 * @param reviewId
+	 * @return Boolean
+	 * @throws GuitarStoreException
+	 */
 	public boolean connectProductReview(int productId, int reviewId) throws GuitarStoreException {
 
 		if (!new ProductDAO().uniqueIdExists(productId))
@@ -50,6 +68,13 @@ public class ProductReviewDAO {
 		return false;
 	}
 
+	/**
+	 * Retrieves and return all reviews related to an specified Product.
+	 * 
+	 * @param productId
+	 * @return List<Review>
+	 * @throws GuitarStoreException
+	 */
 	public List<Review> getReviews(int productId) throws GuitarStoreException {
 		if (!new ProductDAO().uniqueIdExists(productId))
 			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");
@@ -81,6 +106,13 @@ public class ProductReviewDAO {
 
 	}
 
+	/**
+	 * Returns the average of all reviews values related to an specified Product
+	 * 
+	 * @param productId
+	 * @return Double
+	 * @throws GuitarStoreException
+	 */
 	public double getAverage(int productId) throws GuitarStoreException {
 		
 		if (!new ProductDAO().uniqueIdExists(productId))
