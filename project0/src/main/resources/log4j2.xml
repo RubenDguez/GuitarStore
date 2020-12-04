@@ -3,7 +3,7 @@
 <Configuration status="info" monitorInterval="30">
 	
 	<Properties>
-		<Property name="APP_LOG_ROOT">C:/Users/ruben/Desktop</Property>
+		<Property name="APP_LOG_ROOT">/opt/tomcat/latest/logs</Property>
 	</Properties>
 
     <Appenders>
@@ -18,7 +18,7 @@
         <Logger name="com.mkyong" level="trace" additivity="false">
             <AppenderRef ref="LogToFile"/>
         </Logger>
-        <Root level="trace">
+        <Root level="info">
             <AppenderRef ref="LogToFile"/>
         </Root>
     </Loggers>

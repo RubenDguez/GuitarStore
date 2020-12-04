@@ -20,7 +20,7 @@ public class Home_Servlet extends HttpServlet {
 		request.setAttribute("message", message);
 		request.getRequestDispatcher("/WEB-INF/Homepage.jsp").forward(request, response);
 		response.setStatus(200);
-
+		
 	}
 
 }

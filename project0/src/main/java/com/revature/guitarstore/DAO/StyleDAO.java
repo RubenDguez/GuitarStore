@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.revature.guitarstore.model.Style;
 import com.revature.guitarstore.utils.DBConn;
 

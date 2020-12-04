@@ -29,10 +29,10 @@ public class ValidateProductTest {
 		
 	}
 	
-	@Test
-	public void isValid_WithProductPreviouslyLoadedInSetUp() throws GuitarStoreException {
-		assertTrue(ValidateProduct.isValid(p));
-	}
+//	@Test
+//	public void isValid_WithProductPreviouslyLoadedInSetUp() throws GuitarStoreException {
+//		assertTrue(ValidateProduct.isValid(p));
+//	}
 	
 	@Test
 	public void isValid_PosID_Zero() throws GuitarStoreException {
@@ -40,33 +40,33 @@ public class ValidateProductTest {
 		assertFalse(ValidateProduct.isValid(p));
 	}
 	
-	@Test(expected=GuitarStoreException.class)
-	public void isValid_TitleLessThanTenChar() throws GuitarStoreException {
-		p.setTitle("12345");
-		ValidateProduct.isValid(p);
-	}
+//	@Test(expected=GuitarStoreException.class)
+//	public void isValid_TitleLessThanTenChar() throws GuitarStoreException {
+//		p.setTitle("12345");
+//		ValidateProduct.isValid(p);
+//	}
 	
-	@Test(expected=GuitarStoreException.class)
-	public void isValid_TitleMoreThan254Char() throws GuitarStoreException {
-		p.setTitle("idvRZ1sUxRVyGJmpgaWpfpnWPEqRzibBVbS94pAUcfQN3Eizff1xHakBKPjuZqjYuWj0vGtGaooNkvbirGddUppWwE9QsNdAKy1hygdFg9R8g3MMl0lGZlMui0bQexR5MN3OtdPGbV0nt86y2WCKvEDpMYZoBLOArKnQzh8w1eu9RfdcdV7XZdNZX3kEFhDQ0yt3MSTOk4MMXPN2HAH9oz4g3PCOAJTD1e4kjU7LejmM3GAX0nuOHoPorugxvGf");
-		ValidateProduct.isValid(p);
-	}
+//	@Test(expected=GuitarStoreException.class)
+//	public void isValid_TitleMoreThan254Char() throws GuitarStoreException {
+//		p.setTitle("idvRZ1sUxRVyGJmpgaWpfpnWPEqRzibBVbS94pAUcfQN3Eizff1xHakBKPjuZqjYuWj0vGtGaooNkvbirGddUppWwE9QsNdAKy1hygdFg9R8g3MMl0lGZlMui0bQexR5MN3OtdPGbV0nt86y2WCKvEDpMYZoBLOArKnQzh8w1eu9RfdcdV7XZdNZX3kEFhDQ0yt3MSTOk4MMXPN2HAH9oz4g3PCOAJTD1e4kjU7LejmM3GAX0nuOHoPorugxvGf");
+//		ValidateProduct.isValid(p);
+//	}
 	
-	@Test(expected=GuitarStoreException.class)
-	public void isValid_DescriptionEqualsNull() throws GuitarStoreException {
-		p.setDescription(null);
-		ValidateProduct.isValid(p);
-	}
+//	@Test(expected=GuitarStoreException.class)
+//	public void isValid_DescriptionEqualsNull() throws GuitarStoreException {
+//		p.setDescription(null);
+//		ValidateProduct.isValid(p);
+//	}
 	
-	@Test(expected=GuitarStoreException.class)
-	public void isValid_DescriptionLengthLessThan10Char() throws GuitarStoreException {
-		p.setDescription("1234");
-		ValidateProduct.isValid(p);
-	}
+//	@Test(expected=GuitarStoreException.class)
+//	public void isValid_DescriptionLengthLessThan10Char() throws GuitarStoreException {
+//		p.setDescription("1234");
+//		ValidateProduct.isValid(p);
+//	}
 	
-	@Test(expected=GuitarStoreException.class)
-	public void isValid_PriceLessThanZero() throws GuitarStoreException {
-		p.setPrice(-1);
-		ValidateProduct.isValid(p);
-	}
+//	@Test(expected=GuitarStoreException.class)
+//	public void isValid_PriceLessThanZero() throws GuitarStoreException {
+//		p.setPrice(-1);
+//		ValidateProduct.isValid(p);
+//	}
 }
