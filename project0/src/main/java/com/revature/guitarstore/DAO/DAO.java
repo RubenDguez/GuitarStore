@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,7 @@ import com.revature.guitarstore.utils.DBConn;
  * @author Ruben Dominguez
  *
  */
-abstract class DAO {
+abstract class DAO<T> {
 	
 	final int MIN_CODE_LENGTH = 3;
 	final int MAX_CODE_LENGTH = 10;
@@ -48,10 +50,6 @@ abstract class DAO {
 	// It must correspond to the correct table name in database.
 	protected String table;
 	
-	// Abstract methods that must be implemented in child class
-	abstract List<?> getActives();
-	abstract List<?> getInactives();
-
 	/**
 	 * Inserts a record in it respective table in database
 	 * The table in database is defined when the child of this class is created
@@ -362,5 +360,94 @@ abstract class DAO {
 		return true;
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> getActives() {
+		List<T> list = new ArrayList<T>();
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			String sql = "SELECT * FROM " + table + " WHERE ACTIVE = False";
+
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				list.add((T) new GenClass(rs.getInt("UNIQUEID"), rs.getString("Code"), rs.getString("DESCRIPTION")));
+			}
+
+			return list;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return new ArrayList<T>();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> getInactives() {
+		List<T> list = new ArrayList<T>();
+
+		try (Connection conn = DBConn.getConnection()) {
+
+			String sql = "SELECT * FROM " + table + " WHERE ACTIVE = FALSE";
+
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				list.add((T) new GenClass(rs.getInt("UNIQUEID"), rs.getString("Code"), rs.getString("DESCRIPTION")));
+			}
+
+			return list;
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return new ArrayList<T>();
+	}
+	
+}
+
+class GenClass {
+	
+	private int UNIQUEID;
+	private String CODE;
+	private String DESCRIPTION;
+	
+	public GenClass(int id, String code, String description) {
+		UNIQUEID = id;
+		CODE = code;
+		DESCRIPTION = description;
+	}
+
+	public int getUNIQUEID() {
+		return UNIQUEID;
+	}
+
+	public void setUNIQUEID(int uNIQUEID) {
+		UNIQUEID = uNIQUEID;
+	}
+
+	public String getCODE() {
+		return CODE;
+	}
+
+	public void setCODE(String cODE) {
+		CODE = cODE;
+	}
+
+	public String getDESCRIPTION() {
+		return DESCRIPTION;
+	}
+
+	public void setDESCRIPTION(String dESCRIPTION) {
+		DESCRIPTION = dESCRIPTION;
+	}
+	
+	
+	
 	
 }

@@ -43,10 +43,12 @@ public class ProductById_Servlet extends HttpServlet {
 					response.getWriter().append(gson.toJson(pt));
 
 				} catch (GuitarStoreException e) {
+					
 					response.setContentType("application/json");
 					response.setStatus(404);
 					response.getWriter().append("404 Not Found");
 					logger.error("404 Not Found" + e.toString());
+					
 				}
 
 			} else {

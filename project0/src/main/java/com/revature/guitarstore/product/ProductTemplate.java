@@ -4,103 +4,154 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.revature.guitarstore.DAO.BrandDAO;
-import com.revature.guitarstore.DAO.CategoryDAO;
-import com.revature.guitarstore.DAO.ConditionDAO;
-import com.revature.guitarstore.DAO.DepartmentDAO;
-import com.revature.guitarstore.DAO.PremiumGearDAO;
-import com.revature.guitarstore.DAO.ProductFeatureDAO;
-import com.revature.guitarstore.DAO.ProductReviewDAO;
-import com.revature.guitarstore.DAO.ProductSpecificationsDAO;
-import com.revature.guitarstore.DAO.StyleDAO;
 import com.revature.guitarstore.exceptions.GuitarStoreException;
-
+import com.revature.guitarstore.model.Brand;
+import com.revature.guitarstore.model.Category;
+import com.revature.guitarstore.model.Condition;
+import com.revature.guitarstore.model.Department;
 import com.revature.guitarstore.model.Fture;
+import com.revature.guitarstore.model.PremiumGear;
 import com.revature.guitarstore.model.Review;
 import com.revature.guitarstore.model.Specification;
+import com.revature.guitarstore.model.Style;
 import com.revature.guitarstore.utils.DBConn;
 
 public class ProductTemplate {
-	
+
 	private int uniqueID;
 	private int posID;
 	private String title;
 	private String description;
 	private double price;
-		
-	private Map<String, Object> department;
-	private Map<String, Object> style;
-	private Map<String, Object> category;
-	private Map<String, Object> brand;
-	private Map<String, Object> premiumGear;
-	private Map<String, Object> condition;
-	
-	private List<Fture> features;
-	private List<Specification> specifications;
+
+	private Department department;
+	private Style style;
+	private Category category;
+	private Brand brand;
+	private PremiumGear premiumGear;
+	private Condition condition;
+
+	private List<Fture> features = new ArrayList<Fture>();
+	private List<Specification> specifications = new ArrayList<Specification>();
+	private List<Review> reviews = new ArrayList<Review>();
 	private double reviewAverage;
-	private List<Review> reviews;
-	
+
 	protected final static Logger logger = LogManager.getLogger(DBConn.class);
-	
-	public ProductTemplate(int id) throws GuitarStoreException {	
+
+	public ProductTemplate(int id) throws GuitarStoreException {
 		super();
-		
 		this.uniqueID = id;
-		this.posID = 0;
-		this.title = "";
-		this.description = "";
-		this.price = 0;
-		
 		gatherInformation();
 	}
 	
 	private void gatherInformation() throws GuitarStoreException {
-	
+
 		try (Connection conn = DBConn.getConnection()) {
 			
-			String sql = "SELECT * FROM PRODUCT WHERE UNIQUEID = ?";
-			
+			String sql = "SELECT * FROM GETALLPRODUCT_VIEW WHERE PROID = ?";
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			
+
 			stmt.setInt(1, this.uniqueID);
-			
-			ResultSet rs = stmt.executeQuery(); 
-			
+
+			ResultSet rs = stmt.executeQuery();
+
 			if (rs.next()) {
-				
+
 				this.posID = rs.getInt("POSID");
 				this.title = rs.getString("TITLE");
-				this.description = rs.getString("DESCRIPTION");
+				this.description = rs.getString("PRODESC");
 				this.price = rs.getDouble("PRICE");
 
-				this.department = new DepartmentDAO().searchById(rs.getInt("DEPARTMENT_UID")); 
-				this.style = new StyleDAO().searchById(rs.getInt("STYLE_UID"));
-				this.category = new CategoryDAO().searchById(rs.getInt("CATEGORY_UID"));
-				this.brand = new BrandDAO().searchById(rs.getInt("BRAND_UID"));
-				this.premiumGear = new PremiumGearDAO().searchById(rs.getInt("PREMIUMGEAR_UID"));
-				this.condition = new ConditionDAO().searchById(rs.getInt("CONDITION_UID"));
-				
-				this.features = new ProductFeatureDAO().getFeatures(this.uniqueID);
-				
-				this.specifications= new ProductSpecificationsDAO().getSpecifications(this.uniqueID);
+				// department information
+				this.department = new Department(rs.getInt("DEPID"), rs.getString("DEPCOD"), rs.getString("DEPDES"));
 
-				this.reviews = new ProductReviewDAO().getReviews(this.uniqueID);
-				this.reviewAverage = new ProductReviewDAO().getAverage(this.uniqueID);
+				// style information
+				this.style = new Style(rs.getInt("STYID"), rs.getString("STYCOD"), rs.getString("STYDES"));
 
-			}		
-			
+				// category information
+				this.category = new Category(rs.getInt("CATID"), rs.getString("CATCOD"), rs.getString("CATDES"));
 
-			
+				// brand information
+				this.brand = new Brand(rs.getInt("BRAID"), rs.getString("BRACOD"), rs.getString("BRADES"));
+
+				// premium gear information
+				this.premiumGear = new PremiumGear(rs.getInt("PREID"), rs.getString("PRECOD"), rs.getString("PREDES"));
+
+				// condition information
+				this.condition = new Condition(rs.getInt("CONID"), rs.getString("CONCOD"), rs.getString("CONDES"));
+
+				/**
+				 * after analyzing the quantity of connections required to gather features,
+				 * specifications, reviews and reviews average I have determined that recycling
+				 * this connection was a better approach
+				 */
+
+				// features information
+				sql = "SELECT * FROM PRODUCT_FEATURES_VIEW WHERE PRODUCT_UNIQUEID = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, this.uniqueID);
+				rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					this.features.add(new Fture(rs.getInt("FEATURES_UNIQUEID"), rs.getString("CODE"),
+							rs.getString("DESCRIPTION")));
+				}
+
+				// specifications information
+				sql = "SELECT * FROM PRODUCT_SPECIFICATIONS_VIEW WHERE PRODUCT_UNIQUEID = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, this.uniqueID);
+				rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					this.specifications.add(new Specification(rs.getInt("SPECIFICATIONS_UNIQUEID"),
+							rs.getString("CODE"), rs.getString("DESCRIPTION")));
+				}
+
+				// reviews information
+				sql = "SELECT * FROM PRODUCT_REVIEWS_VIEW WHERE PRODUCT_UNIQUEID = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, this.uniqueID);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					this.reviews.add(new Review(rs.getInt("REVIEWS_UNIQUEID"), rs.getInt("VALUE"),
+							rs.getString("TITLE"), rs.getString("BODY")));
+				}
+
+				// reviews average
+				sql = "SELECT COUNT(*) AS COUNT FROM PRODUCT_FEATURES_VIEW WHERE PRODUCT_UNIQUEID = ?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, this.uniqueID);
+				rs = stmt.executeQuery();
+
+				if (rs.next()) {
+					if (rs.getInt("COUNT") > 0) {
+
+						sql = "SELECT AVG(VALUE) AS AVERAGE FROM PRODUCT_REVIEWS_VIEW WHERE PRODUCT_UNIQUEID = ?";
+						stmt = conn.prepareStatement(sql);
+
+						stmt.setInt(1, this.uniqueID);
+						rs = stmt.executeQuery();
+
+						if (rs.next()) {
+							this.reviewAverage = rs.getDouble("AVERAGE");
+						}
+					}
+				}
+
+			}
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
-		
+
 	}
 
 	public int getUniqueID() {
@@ -143,51 +194,51 @@ public class ProductTemplate {
 		this.price = price;
 	}
 
-	public Map<String, Object> getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Map<String, Object> department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
-	public Map<String, Object> getStyle() {
+	public Style getStyle() {
 		return style;
 	}
 
-	public void setStyle(Map<String, Object> style) {
+	public void setStyle(Style style) {
 		this.style = style;
 	}
 
-	public Map<String, Object> getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(Map<String, Object> category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	public Map<String, Object> getBrand() {
+	public Brand getBrand() {
 		return brand;
 	}
 
-	public void setBrand(Map<String, Object> brand) {
+	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 
-	public Map<String, Object> getPremiumGear() {
+	public PremiumGear getPremiumGear() {
 		return premiumGear;
 	}
 
-	public void setPremiumGear(Map<String, Object> premiumGear) {
+	public void setPremiumGear(PremiumGear premiumGear) {
 		this.premiumGear = premiumGear;
 	}
 
-	public Map<String, Object> getCondition() {
+	public Condition getCondition() {
 		return condition;
 	}
 
-	public void setCondition(Map<String, Object> condition) {
+	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
 
@@ -232,6 +283,4 @@ public class ProductTemplate {
 				+ ", reviews=" + reviews + "]";
 	}
 
-	
-		
 }

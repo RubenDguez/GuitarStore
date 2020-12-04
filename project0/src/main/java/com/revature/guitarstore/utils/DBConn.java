@@ -18,24 +18,20 @@ public class DBConn {
 		super();
 	}
 
-	
 	public static Connection getConnection() {
-		
-		logger.error("RDS_USERNAME: " + System.getenv("RDS_USERNAME"));
-		System.out.println("William: " + System.getenv("RDS_USERNAME"));
-		
-		
+	
 		Connection conn = null;
 		
 		try {
-			Class.forName("org.postgresql.Driver");
+
 			DriverManager.registerDriver(new Driver());
 			conn = DriverManager.getConnection(jdbcUrl);
+			logger.debug("Connection successful");
+			System.out.println("Connection successful");
 			return conn;
-		} catch (SQLException | ClassNotFoundException e) {
-			logger.error("Connection failed: " + e.getMessage());
 
-			
+		} catch (SQLException e) {
+			logger.error("Connection failed: " + e.getMessage());
 			System.out.println("Error connecting to database");
 		} 
 		return null;

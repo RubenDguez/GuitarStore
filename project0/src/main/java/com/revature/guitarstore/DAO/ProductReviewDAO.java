@@ -76,8 +76,6 @@ public class ProductReviewDAO {
 	 * @throws GuitarStoreException
 	 */
 	public List<Review> getReviews(int productId) throws GuitarStoreException {
-		if (!new ProductDAO().uniqueIdExists(productId))
-			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");
 
 		List<Review> list = new ArrayList<Review>();
 
@@ -114,9 +112,6 @@ public class ProductReviewDAO {
 	 * @throws GuitarStoreException
 	 */
 	public double getAverage(int productId) throws GuitarStoreException {
-		
-		if (!new ProductDAO().uniqueIdExists(productId))
-			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");
 
 		try (Connection conn = DBConn.getConnection()) {
 

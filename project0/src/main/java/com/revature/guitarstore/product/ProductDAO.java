@@ -80,6 +80,7 @@ public class ProductDAO {
 	}
 
 	public List<ProductTemplate> getAllActiveProducts() throws GuitarStoreException {
+		
 		List<ProductTemplate> list = new ArrayList<ProductTemplate>();
 
 		try (Connection conn = DBConn.getConnection()) {

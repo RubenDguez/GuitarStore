@@ -75,9 +75,7 @@ public class ProductFeatureDAO {
 	 * @throws GuitarStoreException
 	 */
 	public List<Fture> getFeatures(int productId) throws GuitarStoreException {
-		if (!new ProductDAO().uniqueIdExists(productId))
-			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");
-		
+
 		List<Fture> list = new ArrayList<Fture>();
 		
 		try (Connection conn = DBConn.getConnection()) {
@@ -103,11 +101,9 @@ public class ProductFeatureDAO {
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
-		
-		
+	
 		return list;
 		
 	}
-	
-	
+
 }

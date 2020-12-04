@@ -75,8 +75,6 @@ public class ProductSpecificationsDAO {
 	 * @throws GuitarStoreException
 	 */
 	public List<Specification> getSpecifications(int productId) throws GuitarStoreException {
-		if (!new ProductDAO().uniqueIdExists(productId))
-			throw new GuitarStoreException("Product UNIQUEID does not exists in Database");
 		
 		List<Specification> list = new ArrayList<Specification>();
 		
