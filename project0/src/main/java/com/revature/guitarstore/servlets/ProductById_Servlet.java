@@ -40,7 +40,11 @@ public class ProductById_Servlet extends HttpServlet {
 					ProductTemplate pt = new ProductTemplate(productId);
 					response.setContentType("application/json");
 					response.setStatus(200);
-					response.getWriter().append(gson.toJson(pt));
+					if (pt.getActive() == true) {
+						response.getWriter().append(gson.toJson(pt));
+					} else {
+						response.getWriter().append(gson.toJson("Active: false"));
+					}
 
 				} catch (GuitarStoreException e) {
 

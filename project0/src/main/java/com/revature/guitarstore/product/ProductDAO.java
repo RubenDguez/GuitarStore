@@ -89,11 +89,9 @@ public class ProductDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 
-			ResultSet rs = stmt.executeQuery();
+			int rs = stmt.executeUpdate();
 
-			System.out.println("before if (rs.next())");
-			if (rs.next()) {
-				System.out.println("inside if (rs.next())");
+			if (rs == 1) {
 				conn.commit();
 				return true;
 			}

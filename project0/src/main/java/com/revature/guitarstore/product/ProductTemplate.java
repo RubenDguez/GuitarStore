@@ -37,6 +37,8 @@ public class ProductTemplate {
 	private PremiumGear premiumGear;
 	private Condition condition;
 
+	private boolean active;
+
 	private List<Fture> features = new ArrayList<Fture>();
 	private List<Specification> specifications = new ArrayList<Specification>();
 	private List<Review> reviews = new ArrayList<Review>();
@@ -49,11 +51,11 @@ public class ProductTemplate {
 		this.uniqueID = id;
 		gatherInformation();
 	}
-	
+
 	private void gatherInformation() throws GuitarStoreException {
 
 		try (Connection conn = DBConn.getConnection()) {
-			
+
 			String sql = "SELECT * FROM GETALLPRODUCT_VIEW WHERE PROID = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -68,6 +70,7 @@ public class ProductTemplate {
 				this.title = rs.getString("TITLE");
 				this.description = rs.getString("PRODESC");
 				this.price = rs.getDouble("PRICE");
+				this.active = rs.getBoolean("ACTIVE");
 
 				// department information
 				this.department = new Department(rs.getInt("DEPID"), rs.getString("DEPCOD"), rs.getString("DEPDES"));
@@ -240,6 +243,14 @@ public class ProductTemplate {
 
 	public void setCondition(Condition condition) {
 		this.condition = condition;
+	}
+
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public List<Fture> getFeatures() {
