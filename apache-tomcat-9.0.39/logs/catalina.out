@@ -237,3 +237,246 @@ NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED -
 2020-12-11 10:43:03,680 http-nio-8080-exec-4 ERROR Unable to locate appender "LogToFile" for logger config "com.mkyong"
 Connection successful
 Connection successful
+11-Dec-2020 10:52:38.357 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/project0]
+11-Dec-2020 10:52:38.394 WARNING [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [project0] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+11-Dec-2020 10:52:38.395 WARNING [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [project0] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+11-Dec-2020 10:52:38.395 WARNING [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [project0] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+11-Dec-2020 10:52:38.396 WARNING [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [project0] appears to have started a thread named [Log4j2-TF-2-Scheduled-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@11.0.8/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@11.0.8/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:234)
+ java.base@11.0.8/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2123)
+ java.base@11.0.8/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@11.0.8/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@11.0.8/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+ java.base@11.0.8/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+ java.base@11.0.8/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+ java.base@11.0.8/java.lang.Thread.run(Thread.java:834)
+11-Dec-2020 10:52:38.417 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/project0.war]
+11-Dec-2020 10:52:39.018 INFO [Catalina-utility-1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+11-Dec-2020 10:52:39.021 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/project0.war] has finished in [604] ms
+2020-12-11 10:53:03,761 Log4j2-TF-2-Scheduled-1 INFO Source '/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/project0/WEB-INF/classes/log4j2.xml' was modified on Fri Dec 11 10:51:32 EST 2020 (1607701892000), previous modification was on Fri Dec 11 10:40:28 EST 2020 (1607701228000)
+11-Dec-2020 10:53:03.763 INFO [Log4j2-TF-2-Scheduled-1] org.apache.catalina.loader.WebappClassLoaderBase.checkStateForResourceLoading Illegal access: this web application instance has been stopped already. Could not load [org.apache.logging.log4j.core.util.AbstractWatcher$ReconfigurationRunnable]. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access.
+	java.lang.IllegalStateException: Illegal access: this web application instance has been stopped already. Could not load [org.apache.logging.log4j.core.util.AbstractWatcher$ReconfigurationRunnable]. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access.
+		at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForResourceLoading(WebappClassLoaderBase.java:1385)
+		at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForClassLoading(WebappClassLoaderBase.java:1373)
+		at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1226)
+		at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1188)
+		at org.apache.logging.log4j.core.util.AbstractWatcher.modified(AbstractWatcher.java:54)
+		at org.apache.logging.log4j.core.util.WatchManager$WatchRunnable.run(WatchManager.java:311)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+		at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+		at java.base/java.lang.Thread.run(Thread.java:834)
+11-Dec-2020 10:53:52.777 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+11-Dec-2020 10:53:52.777 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+11-Dec-2020 10:53:52.785 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+11-Dec-2020 10:53:52.812 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+11-Dec-2020 10:53:52.834 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+11-Dec-2020 10:54:07.882 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.39
+11-Dec-2020 10:54:07.885 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Oct 6 2020 14:11:46 UTC
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.39.0
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.16
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          x86_64
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           11.0.8+10
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            AdoptOpenJDK
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39
+11-Dec-2020 10:54:07.886 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39
+11-Dec-2020 10:54:07.898 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+11-Dec-2020 10:54:07.898 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/conf/logging.properties
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+11-Dec-2020 10:54:07.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+11-Dec-2020 10:54:07.900 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39
+11-Dec-2020 10:54:07.900 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39
+11-Dec-2020 10:54:07.900 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/temp
+11-Dec-2020 10:54:07.901 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/argenisdominguez/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+11-Dec-2020 10:54:08.153 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+11-Dec-2020 10:54:08.193 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [483] milliseconds
+11-Dec-2020 10:54:08.233 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+11-Dec-2020 10:54:08.233 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.39]
+11-Dec-2020 10:54:08.246 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/project0.war]
+11-Dec-2020 10:54:08.722 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+11-Dec-2020 10:54:08.755 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/project0.war] has finished in [509] ms
+11-Dec-2020 10:54:08.756 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/docs]
+11-Dec-2020 10:54:08.770 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/docs] has finished in [14] ms
+11-Dec-2020 10:54:08.770 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/manager]
+11-Dec-2020 10:54:08.794 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/manager] has finished in [24] ms
+11-Dec-2020 10:54:08.794 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/examples]
+11-Dec-2020 10:54:08.976 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/examples] has finished in [182] ms
+11-Dec-2020 10:54:08.976 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/ROOT]
+11-Dec-2020 10:54:08.988 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/ROOT] has finished in [12] ms
+11-Dec-2020 10:54:08.988 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/host-manager]
+11-Dec-2020 10:54:09.003 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/argenisdominguez/Desktop/Project0/apache-tomcat-9.0.39/webapps/host-manager] has finished in [15] ms
+11-Dec-2020 10:54:09.007 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+11-Dec-2020 10:54:09.014 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [820] milliseconds
+2020-12-11 10:54:15,940 http-nio-8080-exec-1 ERROR FileManager (/opt/tomcat/latest/logs/application-20201211.log) java.io.IOException: Could not create directory /opt/tomcat/latest/logs java.io.IOException: Could not create directory /opt/tomcat/latest/logs
+	at org.apache.logging.log4j.core.util.FileUtils.mkdir(FileUtils.java:127)
+	at org.apache.logging.log4j.core.util.FileUtils.makeParentDirs(FileUtils.java:144)
+	at org.apache.logging.log4j.core.appender.FileManager$FileManagerFactory.createManager(FileManager.java:429)
+	at org.apache.logging.log4j.core.appender.FileManager$FileManagerFactory.createManager(FileManager.java:417)
+	at org.apache.logging.log4j.core.appender.AbstractManager.getManager(AbstractManager.java:113)
+	at org.apache.logging.log4j.core.appender.OutputStreamManager.getManager(OutputStreamManager.java:114)
+	at org.apache.logging.log4j.core.appender.FileManager.getFileManager(FileManager.java:182)
+	at org.apache.logging.log4j.core.appender.FileAppender$Builder.build(FileAppender.java:96)
+	at org.apache.logging.log4j.core.appender.FileAppender$Builder.build(FileAppender.java:52)
+	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.build(PluginBuilder.java:122)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createPluginObject(AbstractConfiguration.java:1002)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:942)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:934)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.doConfigure(AbstractConfiguration.java:552)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.initialize(AbstractConfiguration.java:241)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.start(AbstractConfiguration.java:288)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:618)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:691)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:708)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:263)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:45)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:194)
+	at org.apache.logging.log4j.LogManager.getLogger(LogManager.java:602)
+	at com.revature.guitarstore.servlets.ProductById_Servlet.<clinit>(ProductById_Servlet.java:20)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:151)
+	at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1042)
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:761)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:135)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+2020-12-11 10:54:15,946 http-nio-8080-exec-1 ERROR Could not create plugin of type class org.apache.logging.log4j.core.appender.FileAppender for element File: java.lang.IllegalStateException: ManagerFactory [org.apache.logging.log4j.core.appender.FileManager$FileManagerFactory@2b4c3a9] unable to create manager for [/opt/tomcat/latest/logs/application-20201211.log] with data [org.apache.logging.log4j.core.appender.FileManager$FactoryData@2f7fe65c] java.lang.IllegalStateException: ManagerFactory [org.apache.logging.log4j.core.appender.FileManager$FileManagerFactory@2b4c3a9] unable to create manager for [/opt/tomcat/latest/logs/application-20201211.log] with data [org.apache.logging.log4j.core.appender.FileManager$FactoryData@2f7fe65c]
+	at org.apache.logging.log4j.core.appender.AbstractManager.getManager(AbstractManager.java:115)
+	at org.apache.logging.log4j.core.appender.OutputStreamManager.getManager(OutputStreamManager.java:114)
+	at org.apache.logging.log4j.core.appender.FileManager.getFileManager(FileManager.java:182)
+	at org.apache.logging.log4j.core.appender.FileAppender$Builder.build(FileAppender.java:96)
+	at org.apache.logging.log4j.core.appender.FileAppender$Builder.build(FileAppender.java:52)
+	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.build(PluginBuilder.java:122)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createPluginObject(AbstractConfiguration.java:1002)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:942)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:934)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.doConfigure(AbstractConfiguration.java:552)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.initialize(AbstractConfiguration.java:241)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.start(AbstractConfiguration.java:288)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:618)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:691)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:708)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:263)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:45)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:194)
+	at org.apache.logging.log4j.LogManager.getLogger(LogManager.java:602)
+	at com.revature.guitarstore.servlets.ProductById_Servlet.<clinit>(ProductById_Servlet.java:20)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:151)
+	at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1042)
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:761)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:135)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+2020-12-11 10:54:15,947 http-nio-8080-exec-1 ERROR Unable to invoke factory method in class org.apache.logging.log4j.core.appender.FileAppender for element File: java.lang.IllegalStateException: No factory method found for class org.apache.logging.log4j.core.appender.FileAppender java.lang.IllegalStateException: No factory method found for class org.apache.logging.log4j.core.appender.FileAppender
+	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.findFactoryMethod(PluginBuilder.java:234)
+	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.build(PluginBuilder.java:134)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createPluginObject(AbstractConfiguration.java:1002)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:942)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:934)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.doConfigure(AbstractConfiguration.java:552)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.initialize(AbstractConfiguration.java:241)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.start(AbstractConfiguration.java:288)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:618)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:691)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:708)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:263)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:45)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:194)
+	at org.apache.logging.log4j.LogManager.getLogger(LogManager.java:602)
+	at com.revature.guitarstore.servlets.ProductById_Servlet.<clinit>(ProductById_Servlet.java:20)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:151)
+	at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1042)
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:761)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:135)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+2020-12-11 10:54:15,948 http-nio-8080-exec-1 ERROR Null object returned for File in Appenders.
+2020-12-11 10:54:15,955 http-nio-8080-exec-1 ERROR Unable to locate appender "LogToFile" for logger config "root"
+2020-12-11 10:54:15,955 http-nio-8080-exec-1 ERROR Unable to locate appender "LogToFile" for logger config "com.mkyong"
+Connection successful
+11-Dec-2020 11:05:32.676 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+11-Dec-2020 11:05:32.678 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+11-Dec-2020 11:05:32.688 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+11-Dec-2020 11:05:32.748 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [project0] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+11-Dec-2020 11:05:32.748 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [project0] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+11-Dec-2020 11:05:32.749 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [project0] appears to have started a thread named [Log4j2-TF-2-Scheduled-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@11.0.8/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@11.0.8/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:234)
+ java.base@11.0.8/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2123)
+ java.base@11.0.8/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@11.0.8/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@11.0.8/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+ java.base@11.0.8/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+ java.base@11.0.8/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+ java.base@11.0.8/java.lang.Thread.run(Thread.java:834)
+11-Dec-2020 11:05:32.753 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+11-Dec-2020 11:05:32.796 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
