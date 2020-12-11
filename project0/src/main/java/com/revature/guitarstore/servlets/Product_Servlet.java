@@ -51,8 +51,10 @@ public class Product_Servlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
+		// verifies that at least an user is logged in
 		if (session.getAttribute("id") != null) {
 
+			// verifies that user is an employee or administrator
 			if ((Integer) session.getAttribute("id") < 3) {
 
 				BufferedReader reader = request.getReader();

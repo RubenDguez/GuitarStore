@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS
 	PRODUCT_FEATURES,
 	PRODUCT_SPECIFICATIONS,
 	PRODUCT_REVIEWS,
-	PRODUCT_IMAGES,git 
+	PRODUCT_IMAGES,
 
 	USERS,
 	USERTYPE,
@@ -72,7 +72,8 @@ CREATE TABLE IF NOT EXISTS USERS (
 
 INSERT INTO USERS (USERNAME, EMAIL, PASSWORD, USERTYPE_UID) VALUES
 ('ruben.dominguez', 'ruben.dominguez@revature.net', 'cac6f701071388abe89e12874c9c0bd4', 1),
-('lisa.freiwald', 'lisa.freiwald@yahoo.com', '83b7db4f79abb1fef6106020a91609d8', 2);
+('lisa.freiwald', 'lisa.freiwald@yahoo.com', '83b7db4f79abb1fef6106020a91609d8', 2),
+('toby.boudreaux', 'toby.boudreaux@gmail.com', 'e84b9440b1d371c2c71053874bf6bee8', 1);
 
 CREATE TABLE IF NOT EXISTS DEPARTMENT(
 	UNIQUEID	INT				GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

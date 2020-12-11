@@ -79,6 +79,29 @@ public class ProductDAO {
 		return null;
 	}
 
+	public boolean delete(int id) throws GuitarStoreException {
+		
+		try (Connection conn = DBConn.getConnection()) {
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE PRODUCT SET ACTIVE = FALSE WHERE UNIQUEID=?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				conn.commit();
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		
+		return false;
+	}
+	
 	public List<ProductTemplate> getAllActiveProducts() throws GuitarStoreException {
 		
 		List<ProductTemplate> list = new ArrayList<ProductTemplate>();
@@ -210,3 +233,4 @@ public class ProductDAO {
 	}
 
 }
+ 
