@@ -51,7 +51,7 @@ public class UserLogin_Servlet extends HttpServlet {
 				User user = UserLogin.getAccess(lim.getUsername(), lim.getPassword());
 
 				if (user != null) {
-					
+
 					session.setAttribute("id", user.getUniqueID());
 					session.setAttribute("username", user.getUsername());
 					session.setAttribute("email", user.getEmail());
@@ -61,7 +61,7 @@ public class UserLogin_Servlet extends HttpServlet {
 					response.getWriter().append("session: " + session.getId() + "\n" + gson.toJson(user));
 					response.setStatus(200);
 					logger.debug(" user: " + session.getAttribute("username") + " Session id: " + session.getId());
-				
+
 				} else {
 
 					response.setContentType("application/json");
@@ -83,9 +83,10 @@ public class UserLogin_Servlet extends HttpServlet {
 		} else {
 
 			response.setContentType("application/json");
-			response.getWriter().append("405 Method Not Allowed");
+			response.getWriter()
+					.append("405 Method Not Allowed user already logged in " + session.getAttribute("username"));
 			response.setStatus(405);
-			logger.warn("405 Method Not Allowed");
+			logger.warn("405 Method Not Allowed user already logged in");
 		}
 	}
 }

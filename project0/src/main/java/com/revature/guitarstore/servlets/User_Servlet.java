@@ -53,6 +53,7 @@ public class User_Servlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession s = request.getSession();
+		
 		if ((s.getAttribute("username") != null) && ((Integer) s.getAttribute("usertype") == 1)) {
 
 			BufferedReader reader = request.getReader();
