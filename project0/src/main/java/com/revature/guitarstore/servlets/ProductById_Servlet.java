@@ -90,7 +90,7 @@ public class ProductById_Servlet extends HttpServlet {
 				String string[] = request.getRequestURI().split("/");
 
 				// makes sure we can get an id from URI
-				if (string.length > 4) {
+				if (string.length >= 4) {
 
 					int id = Integer.parseInt(string[4]);
 
