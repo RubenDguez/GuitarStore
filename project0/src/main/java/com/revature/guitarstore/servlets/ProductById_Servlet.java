@@ -1,6 +1,5 @@
 package com.revature.guitarstore.servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.revature.guitarstore.exceptions.GuitarStoreException;
-import com.revature.guitarstore.model.Product;
 import com.revature.guitarstore.product.ProductDAO;
 import com.revature.guitarstore.product.ProductTemplate;
 
@@ -71,7 +69,11 @@ public class ProductById_Servlet extends HttpServlet {
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	/**
+	 * Deletes a product based on its ID Must be logged in as Employee or
+	 * Administrator
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -86,12 +88,12 @@ public class ProductById_Servlet extends HttpServlet {
 
 				// gets the ID from URI
 				String string[] = request.getRequestURI().split("/");
-				
+
 				// makes sure we can get an id from URI
 				if (string.length > 4) {
-					
+
 					int id = Integer.parseInt(string[4]);
-					
+
 					try {
 						response.setContentType("application/json");
 						response.setStatus(200);
