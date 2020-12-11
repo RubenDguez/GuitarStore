@@ -58,7 +58,7 @@ public class UserLogin_Servlet extends HttpServlet {
 					session.setAttribute("usertype", user.getUserType_UID());
 
 					response.setContentType("application/json");
-					response.getWriter().append("session: " + session.getId() + "\n" + gson.toJson(user));
+					response.getWriter().append(gson.toJson(user));
 					response.setStatus(200);
 					logger.debug(" user: " + session.getAttribute("username") + " Session id: " + session.getId());
 

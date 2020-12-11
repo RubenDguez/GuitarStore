@@ -80,30 +80,33 @@ public class ProductDAO {
 	}
 
 	public boolean delete(int id) throws GuitarStoreException {
-		
+
 		try (Connection conn = DBConn.getConnection()) {
 			conn.setAutoCommit(false);
-			
-			String sql = "UPDATE PRODUCT SET ACTIVE = FALSE WHERE UNIQUEID=?";
+
+			String sql = "UPDATE PRODUCT SET ACTIVE = FALSE WHERE UNIQUEID = ?";
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
-			
+
 			ResultSet rs = stmt.executeQuery();
-			
+
+			System.out.println("before if (rs.next())");
 			if (rs.next()) {
+				System.out.println("inside if (rs.next())");
 				conn.commit();
 				return true;
 			}
-			
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
-		
+
 		return false;
 	}
-	
+
 	public List<ProductTemplate> getAllActiveProducts() throws GuitarStoreException {
-		
+
 		List<ProductTemplate> list = new ArrayList<ProductTemplate>();
 
 		try (Connection conn = DBConn.getConnection()) {
@@ -233,4 +236,3 @@ public class ProductDAO {
 	}
 
 }
- 
