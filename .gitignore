@@ -83,3 +83,10 @@ nb-configuration.xml
 ##############################
 .DS_Store
 /.recommenders/
+
+
+
+##############################
+## Custom Folders and files
+##############################
+/apache-tomcat-9.0.39
