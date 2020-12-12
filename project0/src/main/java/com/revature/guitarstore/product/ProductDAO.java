@@ -79,6 +79,50 @@ public class ProductDAO {
 		return null;
 	}
 
+	/**
+	 * This update requires UNIQUEID of the product to be updated and complete
+	 * Product object to which the updated product will retrieve the information
+	 * 
+	 * @param UNIQUEID
+	 * @param product
+	 * @return ProductTemplate, null
+	 * @throws GuitarStoreException
+	 */
+	public ProductTemplate update(int UNIQUEID, Product product) throws GuitarStoreException {
+
+		if (ValidateProduct.isValid(product)) {
+
+			try (Connection conn = DBConn.getConnection()) {
+
+				conn.setAutoCommit(false);
+
+				String sql = "UPDATE PRODUCT SET POSID = ?, TITLE = ?, DESCRIPTION = ?, PRICE = ?, DEPARTMENT_UID = ?, BRAND_UID = ? WHERE UNIQUEID = ? AND ACTIVE = TRUE";
+
+				PreparedStatement stmt = conn.prepareStatement(sql);
+
+				stmt.setInt(1, product.getPosID());
+				stmt.setString(2, product.getTitle());
+				stmt.setString(3, product.getDescription());
+				stmt.setDouble(4, product.getPrice());
+				stmt.setInt(5, product.getDepartment_UID());
+				stmt.setInt(6, product.getBrand_UID());
+				stmt.setInt(7, UNIQUEID);
+
+				if (stmt.executeUpdate() == 1) {
+					System.out.println("inside stmt.executeUpdate()");
+					conn.commit();
+					return new ProductTemplate(UNIQUEID);
+				} else
+					throw new GuitarStoreException(
+							"Error updating product; excuteUpdate did not return a valid response.");
+
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+			}
+		}
+		return null;
+	}
+
 	public boolean delete(int id) throws GuitarStoreException {
 
 		try (Connection conn = DBConn.getConnection()) {
