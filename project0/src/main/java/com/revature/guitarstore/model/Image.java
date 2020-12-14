@@ -1,13 +1,13 @@
 package com.revature.guitarstore.model;
 
 public class Image {
-	
+
 	private int uniqueID;
 	private String imageName;
 	private int imageOID;
 
 	public Image() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public int getUniqueID() {
